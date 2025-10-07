@@ -19,11 +19,51 @@ enum UserRole {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  firstName String
-  lastName  String
-  cpf       String   @unique
-  password  String
-  role      UserRole @default(DELIVERER)
-  createdAt DateTime @default(now())
+  id               String    @id @default(cuid())
+  firstName        String
+  lastName         String
+  cpf              String    @unique
+  password         String
+  role             UserRole  @default(DELIVERER)
+  createdAt        DateTime  @default(now())
+  packagesAssigned Package[] @relation("AssignedPackages")
+
+  @@map("users")
+}
+
+model Recipient {
+  id        String    @id @default(cuid())
+  name      String
+  address   String
+  city      String
+  state     String
+  zipCode   String
+  createdAt DateTime  @default(now())
+  packages  Package[]
+
+  @@map("recipients")
+}
+
+enum PackageStatus {
+  PENDING
+  PICKED_UP
+  DELIVERED
+  RETURNED
+}
+
+model Package {
+  id           String        @id @default(uuid())
+  description  String
+  status       PackageStatus @default(PENDING)
+  recipientId  String
+  recipient    Recipient     @relation(fields: [recipientId], references: [id])
+  assignedToId String?
+  assignedTo   User?         @relation("AssignedPackages", fields: [assignedToId], references: [id])
+  photoProof   String?
+  pickedUpAt   DateTime?
+  deliveredAt  DateTime?
+  returnedAt   DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  userId       String?
 }

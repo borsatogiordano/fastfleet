@@ -2,9 +2,7 @@ import { Body, Controller, Post, Get, UsePipes, HttpStatus, HttpCode, UseGuards,
 import { createUserSchema, type CreateUserDto } from "../schemas/create-user.schema";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { CreateUserUseCase } from "../use-cases/create-user-use-case";
-import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
-import { RolesGuard } from "../../auth/guards/roles.guard";
-import { Roles, UserRole } from "../../auth/decorators/roles.decorator";
+import { Roles, UserRole } from "src/modules/auth/decorators/roles.decorator";
 
 @Controller("users")
 export class CreateUserController {
@@ -12,7 +10,8 @@ export class CreateUserController {
   constructor(private readonly createUserUseCase: CreateUserUseCase) { }
 
   @Post()
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.CREATED)
+  @Roles(UserRole.ADMIN)
   @UsePipes(new ZodValidationPipe(createUserSchema))
   async createUser(@Body() body: CreateUserDto): Promise<void> {
     await this.createUserUseCase.execute(body);
