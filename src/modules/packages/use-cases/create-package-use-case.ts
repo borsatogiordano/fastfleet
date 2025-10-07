@@ -10,6 +10,7 @@ export class CreatePackageUseCase {
     private repo: PackageRepositoryInterface) { }
 
   async execute(data: CreatePackageDto) {
+    //TODO: Validar se o destinatário existe
     const newPackage = await this.repo.create(data);
   }
 }
