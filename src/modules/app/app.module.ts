@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './modules/user/user.module';
-import { PrismaModule } from './modules/database/prisma.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { PackageModule } from './modules/packages/package.module';
+import { UserModule } from '../user/user.module';
+import { PrismaModule } from '../database/prisma.module';
+import { AuthModule } from '../auth/auth.module';
+import { PackageModule } from '../packages/package.module';
 
 @Module({
   imports: [PrismaModule, UserModule, AuthModule, PackageModule],
