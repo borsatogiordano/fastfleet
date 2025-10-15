@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, HttpCode, UseGuards, Param, Delete, Get } from "@nestjs/common";
+import { Controller, HttpStatus, HttpCode, UseGuards, Param, Delete, Get, Req } from "@nestjs/common";
 import { Roles, UserRole } from "src/modules/auth/decorators/roles.decorator";
 import { JwtAuthGuard } from "src/modules/auth/guards/jwt-auth.guard";
 import { RolesGuard } from "src/modules/auth/guards/roles.guard";
@@ -16,7 +16,8 @@ export class GetUserByIdController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async getUserById(@Param("id") id: string): Promise<Omit<User, 'password'> | null> {
+  async getUserById(
+    @Param("id") id: string): Promise<Omit<User, 'password'> | null> {
     return this.getUserByIdUseCase.execute(id);
   }
 }

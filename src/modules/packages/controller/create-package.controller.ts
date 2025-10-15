@@ -6,10 +6,10 @@ import { Roles, UserRole } from "src/modules/auth/decorators/roles.decorator";
 import z from "zod";
 import { CreatePackageUseCase } from "../use-cases/create-package-use-case";
 
-const createPackageSchema = z.object({
-  description: z.string().min(5),
-  recipientId: z.cuid(),
-})
+export const createPackageSchema = z.object({
+  description: z.string().min(5, 'A descrição deve ter pelo menos 5 caracteres'),
+  recipientId: z.string().cuid('recipientId deve ser um cuid válido'),
+});
 
 export type CreatePackageDto = z.infer<typeof createPackageSchema>;
 
