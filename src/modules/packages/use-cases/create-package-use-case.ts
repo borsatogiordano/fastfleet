@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePackageDto } from '../controller/create-package.controller';
 import { PackageRepositoryInterface } from '../repositories/package-repository';
-import { RecipientRepositoryInterface } from 'src/modules/recipients/repositories/recipient-repotory';
+import { RecipientRepositoryInterface } from 'src/modules/recipients/repositories/recipient-repository';
 
 @Injectable()
 export class CreatePackageUseCase {
